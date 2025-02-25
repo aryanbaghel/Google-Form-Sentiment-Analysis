@@ -1,6 +1,6 @@
 # Google-Form-Sentiment-Analysis
 
-![Logo](https://cdn-icons-png.freepik.com/256/2282/2282324.png?semt=ais_hybrid)
+![Logo](https://i0.wp.com/turbolab.in/wp-content/uploads/2021/09/sentiment.png?fit=698%2C400&ssl=1)
 
 ## Overview
 
