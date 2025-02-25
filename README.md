@@ -1,6 +1,6 @@
 # Google-Form-Sentiment-Analysis
 
-![Logo](https://cdn-icons-png.flaticon.com/512/9850/9850903.png)
+![Logo](https://cdn-icons-png.freepik.com/256/2282/2282324.png?semt=ais_hybrid)
 
 ## Overview
 
