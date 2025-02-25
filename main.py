@@ -18,7 +18,7 @@ st.title("SENTIMENT ANALYSIS SYSTEM")
 choice = st.sidebar.selectbox("My Menu", ("HOME", "ANALYSIS", "RESULTS"))
 
 if choice == "HOME":
-    st.image("https://cdn.dribbble.com/userupload/21162478/file/original-e2fb97f5400edfc0cf5e39bbee823576.gif")
+    st.image("https://camo.githubusercontent.com/1fa27ef9b772b945093204377c5b4509f15b3f04aba8297863b765aa68571f10/68747470733a2f2f6d656469612e7370726f7574736f6369616c2e636f6d2f75706c6f6164732f323032332f30372f53656e74696d656e742d616e616c797369732d4855422d46696e616c2e6a7067")
     st.write("1. This is a Natural Language Processing application that can analyze sentiment from text data.")
     st.write("2. It categorizes sentiment into Positive, Negative, or Neutral.")
     st.write("3. The application visualizes results based on factors such as age, gender, language, and city.")
