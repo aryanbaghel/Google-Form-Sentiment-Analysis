@@ -1,85 +1,101 @@
 import streamlit as st
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build 
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer 
 import pandas as pd
 import plotly.express as px
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from googleapiclient.discovery import build
+from google.oauth2 import service_account
 
+# Set page configuration
+st.set_page_config(
+    page_title="Sentiment Analysis System",
+    page_icon="https://cdn-icons-png.flaticon.com/512/9850/9850903.png",
+    layout="wide"
+)
 
-st.set_page_config(page_title="Sentiment Analysis System",page_icon="https://cdn-icons-png.flaticon.com/512/9850/9850903.png")
 st.title("SENTIMENT ANALYSIS SYSTEM")
 
+# Sidebar navigation
+choice = st.sidebar.selectbox("My Menu", ("HOME", "ANALYSIS", "RESULTS"))
 
-choice=st.sidebar.selectbox("My Menu",("HOME","ANALYSIS","RESULTS"))
-
-if(choice=='HOME'):
+if choice == "HOME":
     st.image("https://cdn.dribbble.com/userupload/21162478/file/original-e2fb97f5400edfc0cf5e39bbee823576.gif")
     st.write("1. This is a Natural Language Processing application that can analyze sentiment from text data.")
     st.write("2. It categorizes sentiment into Positive, Negative, or Neutral.")
     st.write("3. The application visualizes results based on factors such as age, gender, language, and city.")
 
-
 elif choice == "ANALYSIS":
     sid = st.text_input("Enter your Google Sheet ID")
-    r = st.text_input("Enter Range between first column and last column (e.g., Sheet1!A1:D100)")
+    r = st.text_input("Enter Range (e.g., Sheet1!A1:D100)")
     c = st.text_input("Enter column name to be analyzed")
-    btn=st.button("Analyze")
+    btn = st.button("Analyze")
 
     if btn:
-        if 'cred' not in st.session_state:
-            # Initialize OAuth flow
-            f=InstalledAppFlow.from_client_secrets_file("key.json",["https://www.googleapis.com/auth/spreadsheets"])
-            # Run local server for authentication            
-            st.session_state['cred']=f.run_local_server(port=0)
-
-
-        mymodel=SentimentIntensityAnalyzer()
-        
-        # Build the Google Sheets API service
-        service=build("Sheets","v4",credentials=st.session_state['cred']).spreadsheets().values()
-        result=service.get(spreadsheetId=sid ,range=r).execute()
-        data=result['values']
-        df=pd.DataFrame(data=data[1:],columns=data[0])
-        l=[]
-
-
-        for i in range(len(df)):
-
-
-            t=df._get_value(i,c)
-            pred=mymodel.polarity_scores(t)
-            if(pred['compound']>0.5):
-                l.append("Positive")
-            elif(pred['compound']<-0.5):
-                l.append("Negative")
-            else:
-                l.append("Neutral")
+        try:
+            # Create credentials from your service account key file (named key.json)
+            credentials = service_account.Credentials.from_service_account_file(
+                "key.json",
+                scopes=["https://www.googleapis.com/auth/spreadsheets"]
+            )
             
-        df['Sentiment']=l
-        df.to_csv("results.csv",index=False) #To save the excel on firefox to computer in csv form
-        st.subheader("The Analysis results are saved by the name of a results.csv file")
+            # Build the Google Sheets API service
+            service = build("sheets", "v4", credentials=credentials).spreadsheets().values()
+            result = service.get(spreadsheetId=sid, range=r).execute()
+            data = result.get('values', [])
+            
+            if not data or len(data) < 2:
+                st.error("The provided range does not contain enough data.")
+            else:
+                # Convert data to a DataFrame
+                df = pd.DataFrame(data=data[1:], columns=data[0])
+                analyzer = SentimentIntensityAnalyzer()
+                sentiments = []
+                
+                for i in range(len(df)):
+                    text = df.at[i, c]
+                    scores = analyzer.polarity_scores(text)
+                    if scores['compound'] > 0.5:
+                        sentiments.append("Positive")
+                    elif scores['compound'] < -0.5:
+                        sentiments.append("Negative")
+                    else:
+                        sentiments.append("Neutral")
+                        
+                df['Sentiment'] = sentiments
+                df.to_csv("results.csv", index=False)
+                st.success("Analysis complete! Results saved as results.csv.")
+                st.dataframe(df)
+        except Exception as e:
+            st.error(f"An error occurred during analysis: {e}")
 
-elif(choice=="RESULTS"):
-    df=pd.read_csv("results.csv")
-    choice2=st.selectbox("Choose Visualization",("NONE","PIE CHART","HISTOGRAM","SCATTER PLOT"))
-    st.dataframe(df)
-    if(choice2=="PIE CHART"):
-        posper=(len(df[df['Sentiment']=='Positive'])/len(df))*100
-        negper=(len(df[df['Sentiment']=='Negative'])/len(df))*100
-        neuper=(len(df[df['Sentiment']=='Neutral'])/len(df))*100
-        fig=px.pie(values=[posper,negper,neuper],names=['Positive','Negative','Neutral'])
-        st.plotly_chart(fig)
+elif choice == "RESULTS":
+    try:
+        df = pd.read_csv("results.csv")
+        st.dataframe(df)
+        
+        viz_choice = st.selectbox("Choose Visualization", ("NONE", "PIE CHART", "HISTOGRAM", "SCATTER PLOT"))
+        
+        if viz_choice == "PIE CHART":
+            pos_pct = (len(df[df['Sentiment'] == 'Positive']) / len(df)) * 100
+            neg_pct = (len(df[df['Sentiment'] == 'Negative']) / len(df)) * 100
+            neu_pct = (len(df[df['Sentiment'] == 'Neutral']) / len(df)) * 100
+            fig = px.pie(values=[pos_pct, neg_pct, neu_pct], names=['Positive', 'Negative', 'Neutral'],
+                         title="Sentiment Distribution")
+            st.plotly_chart(fig)
 
-    elif(choice2=="HISTOGRAM"):
-        k=st.selectbox("CHoose column",df.columns)
-        if k:
-            fig=px.histogram(x=df[k],color=df['Sentiment'])
-            st.plotly_chart(fig)
-    elif(choice2=="SCATTER PLOT"):
-        k=st.text_input("Enter the continous column name")
-        if k:
-            fig=px.scatter(x=df[k],y=df['Sentiment'],color=df['Sentiment'],size=df[k])
-            st.plotly_chart(fig)
+        elif viz_choice == "HISTOGRAM":
+            col_choice = st.selectbox("Choose column for histogram", df.columns)
+            if col_choice:
+                fig = px.histogram(df, x=col_choice, color="Sentiment", title=f"Histogram of {col_choice}")
+                st.plotly_chart(fig)
+
+        elif viz_choice == "SCATTER PLOT":
+            cont_col = st.text_input("Enter the continuous column name for the scatter plot")
+            if cont_col and cont_col in df.columns:
+                fig = px.scatter(df, x=cont_col, y="Sentiment", color="Sentiment",
+                                 title=f"Scatter Plot using {cont_col}")
+                st.plotly_chart(fig)
+    except Exception as e:
+        st.error(f"An error occurred while displaying results: {e}")
 
 
 
