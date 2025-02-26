@@ -1,6 +1,7 @@
-google-auth-oauthlib
-google-api-python-client
-vaderSentiment
-pandas
-plotly
-streamlit
+google_api_python_client==2.140.0
+google_auth_oauthlib==1.2.1
+pandas==2.2.2
+plotly==5.23.0
+streamlit==1.37.1
+vaderSentiment==3.3.2
+vaderSentiment==3.3.2
