@@ -103,13 +103,12 @@
 
 
 
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
+from google.oauth2.credentials import Credentials
 import os
 import webbrowser
 
@@ -137,9 +136,15 @@ elif choice == "ANALYSIS":
 
     if btn:
         try:
-            # Authenticate using OAuth 2.0 with Streamlit Secrets
-            flow = InstalledAppFlow.from_client_secrets_file("key.json", scopes=["https://www.googleapis.com/auth/spreadsheets"])
-            creds = flow.run_console()
+            # Use Streamlit secrets for authentication
+            creds = Credentials.from_authorized_user_info(
+                {
+                    "client_id": st.secrets["google"]["client_id"],
+                    "client_secret": st.secrets["google"]["client_secret"],
+                    "refresh_token": st.secrets["google"]["refresh_token"],
+                    "token": ""
+                }
+            )
             
             service = build("sheets", "v4", credentials=creds).spreadsheets().values()
             st.write("✅ Authentication successful. Fetching data...")
@@ -160,7 +165,7 @@ elif choice == "ANALYSIS":
                     
                     # Optimized sentiment analysis using apply
                     df['Sentiment'] = df[c].apply(lambda x: "Positive" if analyzer.polarity_scores(str(x))['compound'] > 0.5 else
-                                                            "Negative" if analyzer.polarity_scores(str(x))['compound'] < -0.5 else "Neutral")
+                                                                "Negative" if analyzer.polarity_scores(str(x))['compound'] < -0.5 else "Neutral")
                     df.to_csv("results.csv", index=False)
                     st.success("Analysis results saved to 'results.csv'")
                     
@@ -199,11 +204,3 @@ elif choice == "RESULTS":
                     st.plotly_chart(fig)
         except Exception as e:
             st.error(f"An error occurred while displaying results: {e}")
-
-
-
-
-
-
-                
-                
