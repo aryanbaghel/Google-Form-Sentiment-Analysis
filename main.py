@@ -20,8 +20,7 @@ st.title("SENTIMENT ANALYSIS SYSTEM")
 choice = st.sidebar.selectbox("My Menu", ("HOME", "ANALYSIS", "RESULTS"))
 
 if choice == "HOME":
-    st.image("https://i0.wp.com/turbolab.in/wp-content/uploads/2021/09/sentiment.png?fit=698%2C400&ssl=1
-")
+    st.image("https://i0.wp.com/turbolab.in/wp-content/uploads/2021/09/sentiment.png?fit=698%2C400&ssl=1")
     st.write("1. This is a Natural Language Processing application that can analyze sentiment from text data.")
     st.write("2. It categorizes sentiment into Positive, Negative, or Neutral.")
     st.write("3. The application visualizes results based on factors such as age, gender, language, and city.")
