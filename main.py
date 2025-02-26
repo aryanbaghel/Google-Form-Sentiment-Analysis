@@ -8,7 +8,7 @@ import os
 import webbrowser
 
 # Set Firefox as the browser on Mac
-firefox_path = '/Macintosh HD/Applications/Firefox.app/Contents/MacOS/firefox'
+firefox_path = '/Applications/Firefox.app/Contents/MacOS/firefox'
 webbrowser.register('firefox', None, webbrowser.BackgroundBrowser(firefox_path))
 
 st.set_page_config(page_title="Sentiment Analysis System", page_icon="https://cdn-icons-png.flaticon.com/512/9850/9850903.png")
@@ -38,27 +38,32 @@ elif choice == "ANALYSIS":
             creds = flow.run_local_server(port=0, browser='firefox')
             
             service = build("sheets", "v4", credentials=creds).spreadsheets().values()
-            st.write(" Authentication successful. Fetching data...")
-
+            st.write("Authentication successful. Fetching data...")
+            
+            # Fetch data efficiently
             result = service.get(spreadsheetId=sid, range=r).execute()
             data = result.get('values', [])
-
+            
             if not data or len(data) < 2:
                 st.error("The provided range does not contain enough data.")
             else:
-                df = pd.DataFrame(data=data[1:], columns=data[0])
+                df = pd.DataFrame(data[1:], columns=data[0])
                 if c not in df.columns:
                     st.error(f"Column '{c}' not found in the data.")
                 else:
+                    st.write("Data fetched successfully. Performing Sentiment Analysis...")
                     analyzer = SentimentIntensityAnalyzer()
-                    df['Sentiment'] = df[c].apply(lambda x: "Positive" if analyzer.polarity_scores(x)['compound'] > 0.5 else
-                                                            "Negative" if analyzer.polarity_scores(x)['compound'] < -0.5 else "Neutral")
+                    
+                    # Optimized sentiment analysis using apply
+                    df['Sentiment'] = df[c].apply(lambda x: "Positive" if analyzer.polarity_scores(str(x))['compound'] > 0.5 else
+                                                            "Negative" if analyzer.polarity_scores(str(x))['compound'] < -0.5 else "Neutral")
                     df.to_csv("results.csv", index=False)
                     st.success("Analysis results saved to 'results.csv'")
-
+                    
                     # Write back to Google Sheets
                     update_range = f"{r.split('!')[0]}!A1"  # Update from the start of the sheet
-                    service.update(spreadsheetId=sid, range=update_range, valueInputOption="RAW", body={"values": [df.columns.tolist()] + df.values.tolist()}).execute()
+                    service.update(spreadsheetId=sid, range=update_range, valueInputOption="RAW", 
+                                   body={"values": [df.columns.tolist()] + df.values.tolist()}).execute()
                     st.success("Data successfully updated in Google Sheets!")
         except Exception as e:
             st.error(f"An error occurred during analysis: {e}")
@@ -90,7 +95,6 @@ elif choice == "RESULTS":
                     st.plotly_chart(fig)
         except Exception as e:
             st.error(f"An error occurred while displaying results: {e}")
-
 
 
 
