@@ -7,7 +7,6 @@ from googleapiclient.discovery import build
 import os
 import webbrowser
 
-https://i0.wp.com/turbolab.in/wp-content/uploads/2021/09/sentiment.png?fit=698%2C400&ssl=1
 #https://media.sproutsocial.com/uploads/2023/07/Sentiment-analysis-HUB-Final.jpg
 
 # Set Firefox as the browser on Mac
