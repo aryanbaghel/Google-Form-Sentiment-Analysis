@@ -1,13 +1,3 @@
-{
-  "type": "service_account",
-  "project_id": "gofo-sentimental-analysis",
-  "private_key_id": "407b6e4c7e890f44c7ce43898991d4650e82edcb",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDdmI0WkJpL7+jk\n49JV6fCiNO0CI5fBP4ZXjVRUPdtnUroDGzl9UYHEcM8coktKmhLRsPBpWoR1+bJn\nOLwjNpm+JqE12BdBNj6a12p4fk1u+yOytFTVOeE//m9hSCK0oLIQIPiiG43d9g7e\nQq1PWOPbES4nASlfGCR6haaYEBTjAnW2F/lTGglkpWKJNbyCRDNP1o3Dibm30EWg\nkiR6K5HJqd4bv+4DbxzC83elf+bZb/R/osVJ56VIeBaAp7LEon4f2ca4Qx94315R\nV3MbAQrTEjiKSswoeNYTM+YSuhxajs9/5pnpostkfBcOHInJoToVeL9iCc8dFk5+\nRZZAdnfRAgMBAAECggEAC10uTkwJhaYFHDvf7QT+w933+GY2SAEUe1S/Nt5abDDB\nyYGYNkHutQUqy4EGxtaI6yHQtzs4bZgDdKfkFuA1cs5AJTOl2ab8Mrk9kULugKfQ\nO4yXVYoCCbCbXXKAFe6wKWovcszIvtHGdTjkWQKp4lgKtSuQYUgqxfFcF99EDiVZ\nLtClXXc41NQzvxfhXpDOw6sAiGrASk51/zE8SToqaWk3EHEJZEK4yzGn0fOTWAH1\n25v+zUwNkft1HlvAqrE3CHDFuaPvKTYbR8brdGc92w5h25tuyN7GMWFKSre19jGJ\nHBlyAwTwJQgdIAxOZG2SJTGCm7gU6JFypbWnI8w4WwKBgQD7bw9kadmfy0ueMaj/\nl17NsxKKrJoeU/pnBO4DZG+DbU4XWWQJery8Xl+mRwkOp4kFv2LnCoae7EZyADpM\nfY1pEkiPeyLqqSKD6yFE2nKoQkT5jJ9EgSSsYedbxF8P1sIjLXHSgQN6qxCVk/up\nhbSbR99ia8+LadhOpHFtVxq89wKBgQDhnsWJzf3HdaO639iwoqxhn3bzY7WBABJT\nU7IvK+02mmt6GOsmnoyH9keGWy5/oCpiQ+PiYlokPSzjtsjVCHy3okA2Jgi8+iyt\n1Vn0kRs4EBoV2iztoUDm+ougXzgx7eOvEbUYmd6+sX5qGnbK9TxdZBd4XZdVpk/U\nZDjePPkndwKBgFGcQsq88L5FJk46oDgV0dfCgAoy6/NcHrLBjt/bAbcPC4HYqffJ\ntukNWM6H0BDJoFgVPuzvJbL/zf3CxSl+tx+bp6GqvjKco29eKnZG0WB74hd95VQ+\n9sBdJtNKcfCaLHlujrtc1NxEGiXy2oSzuWONeJxhkgQWXvdnuMlctHkRAoGAIGNq\neB3aEIgSuQDpWnH/zQPXT5lAtQQNnWima58irnP8ecqZ9zFLezkfi2oLgsa7Tt/w\nFs+HoSwnBYl3yx0syi/AiAVtu7MuNsYp47Hw9ltZY0muqW48ouvUn3EL4B8GUFt6\nY82y7C0OuKyT4Q7TW5TCycSltOXrD9JTV5PpMIECgYB46tZhSdPqL+F/IwKgSvqu\n7RDIQR/W6GLnE0IPTjc57RnDGE+1K1yHFLc+GfP3V9jCctBreRBAFWf/wa/REzfy\nExodcsqWAX0U+qL7bR74bl5wS11FvdHBpxRr6I7CGaFWe/iE0Ao1NvefS49CSzcF\nZzUWCLJueIZWLU7z5lL1pA==\n-----END PRIVATE KEY-----\n",
-  "client_email": "gofo-sentiment@gofo-sentimental-analysis.iam.gserviceaccount.com",
-  "client_id": "117796842145434186335",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gofo-sentiment%40gofo-sentimental-analysis.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
+{"installed":{"client_id":"696033934051-fi5pqcl6gdpind5u7c237egafqd3phr4.apps.googleusercontent.com","project_id":"gofo-sentimental-analysis","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["http://localhost"]}}
+
+
