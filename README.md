@@ -61,6 +61,9 @@ The **Sentiment Analysis System** is a web application designed to perform senti
 - ![image](https://github.com/user-attachments/assets/757012e3-a875-4361-a520-2f85a29425bf)
 - ![image](https://github.com/user-attachments/assets/3549e999-85cb-4c7c-bbab-61665782adb2)
 
+## License
+
+This project is licensed under the [MIT License](LICENSE).
 
 
 ## Contributing
